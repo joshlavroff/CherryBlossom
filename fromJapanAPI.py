@@ -6,6 +6,7 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 import scrapeFromJapan
+from concurrent import futures
 
 load_dotenv()
 app=Flask(__name__)
@@ -49,10 +50,10 @@ def create_search():
         with connection.cursor() as cursor:
             cursor.execute(CREATE_FJPITEMS_TABLE)
             cursor.execute(CREATE_IMAGES_TABLE)
-            for link in links:
-                item=scrapeFromJapan.getItem(link)
-                cursor.execute(INSERT_ITEM_RETURN_ID,(term,item['name'],link,item['price']))
-                item_id=cursor.fetchone()[0]
+            with futures.ThreadPoolExecutor(max_workers=10) as executor:
+                items=list(executor.map(scrapeFromJapan.getItem,links))
+            for item in items:
+                cursor.execute(INSERT_ITEM_RETURN_ID,(term,item['name'],item['link'],item['price']))
                 for image in item['images']:
                     cursor.execute(INSERT_IMAGES,(item['name'],term,image))
             cursor.close()

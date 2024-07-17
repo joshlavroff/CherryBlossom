@@ -44,7 +44,7 @@ def getItem(url):
     imageCarousel=soup.find(class_='swiper-wrapper')
     images=list(map(lambda x: x['src'],imageCarousel.find_all('img')))
     #itemDescription=soup.find(class_='leading-loose').string  
-    return {'images':images,'price':itemPrice,'name':itemName.encode('utf-8')}
+    return {'images':images,'price':itemPrice,'name':itemName.encode('utf-8'),'link':url}
     
 def getPage(url):
     driver=webdriver.Chrome(
