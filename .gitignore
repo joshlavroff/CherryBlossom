@@ -1,0 +1,15 @@
+/create_db_g.py
+/fjplinks.json
+/grailedAPI_old.py
+/.env
+/.flaskenv
+/index.js
+/mercariScrape.py
+/package.json
+/package-lock.json
+/prices.json
+/tests.py
+/node_modules
+/database.db
+/__pycache__
+/instance
