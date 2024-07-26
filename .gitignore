@@ -14,3 +14,8 @@
 /__pycache__
 /instance
 /grailedfunc.py
+/*.png
+/*.jpg
+/imageClassify.py
+/.ipynb_checkpoints/ProductRegression-checkpoint.ipynb
+/imageClassify.py
