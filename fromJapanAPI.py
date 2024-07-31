@@ -41,7 +41,7 @@ GET_IMAGES_BY_SEARCHTERM='SELECT * FROM images WHERE searchTerm=%s'
 
 GET_IMAGES_BY_LIKETERMS='SELECT * FROM images WHERE searchTerm LIKE %s'
 
-@app.post('/items/search')
+@app.post('/api/items/search')
 def create_search():
     data=request.get_json()
     term=data['searchTerm']
@@ -60,7 +60,7 @@ def create_search():
             cursor.close()
             return {'message':f'Search for {term} executed successfully'},201
 
-@app.post('/items')
+@app.post('/api/items')
 def create_item():
     data=request.get_json()
     searchTerm=data['searchTerm']
@@ -75,7 +75,7 @@ def create_item():
             cursor.close()
             return {'item_id':item_id,'message':f'Item {name} created'},201
 
-@app.get('/items/by-term')
+@app.get('/api/items/by-term')
 def get_items_by_term():
     data=request.get_json()
     term=data['searchTerm']
@@ -86,7 +86,7 @@ def get_items_by_term():
             cursor.close()
             return items
 
-@app.get('/items/by-like-term')
+@app.get('/api/items/by-like-term')
 def get_items_by_like_term():
     data=request.get_json()
     term=data['searchTerm']
@@ -97,7 +97,7 @@ def get_items_by_like_term():
             cursor.close()
             return items
 
-@app.get('/items/by-price')
+@app.get('/api/items/by-price')
 def get_items_by_price():
     data=request.get_json()
     minPrice=data['minPrice']
