@@ -19,7 +19,7 @@ CREATE_FJPITEMS_TABLE=(
 )
 
 CREATE_IMAGES_TABLE=(
-    '''CREATE TABLE IF NOT EXISTS images (id SERIAL PRIMARY KEY, name TEXT, searchTerm TEXT, imageLink TEXT)'''
+    '''CREATE TABLE IF NOT EXISTS images (id SERIAL PRIMARY KEY, itemID INTEGER, name TEXT, searchTerm TEXT, imageLink TEXT)'''
 )
 
 INSERT_ITEM_RETURN_ID='''INSERT INTO FJPITEMS (searchTerm,name,link,price) 
@@ -33,7 +33,7 @@ GET_ITEMS_WITH_SEARCHTERM='SELECT * FROM FJPITEMS WHERE searchTerm=%s;'
 
 GET_ITEMS_WITH_KEYWORD='SELECT * FROM FJPITEMS WHERE name LIKE %s;'
 
-INSERT_IMAGES='INSERT INTO images (name,searchTerm,imageLink) VALUES (%s,%s,%s)'
+INSERT_IMAGES='INSERT INTO images (name,itemID,searchTerm,imageLink) VALUES (%s,%s,%s,%s)'
 
 GET_IMAGES_BY_ITEM='SELECT * FROM images WHERE name=%s'
 
@@ -54,8 +54,9 @@ def create_search():
                 items=list(executor.map(scrapeFromJapan.getItem,links))
             for item in items:
                 cursor.execute(INSERT_ITEM_RETURN_ID,(term,item['name'],item['link'],item['price']))
+                item_id=cursor.fetchone()[0]
                 for image in item['images']:
-                    cursor.execute(INSERT_IMAGES,(item['name'],term,image))
+                    cursor.execute(INSERT_IMAGES,(item['name'],item_id,term,image))
             cursor.close()
             return {'message':f'Search for {term} executed successfully'},201
 

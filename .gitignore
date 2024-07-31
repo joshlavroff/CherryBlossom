@@ -19,3 +19,8 @@
 /imageClassify.py
 /.ipynb_checkpoints/ProductRegression-checkpoint.ipynb
 /imageClassify.py
+ImageReg.ipynb
+sampledImages.csv
+.ipynb_checkpoints/ProductRegression_PyTorch-checkpoint.ipynb
+ProductRegression_PyTorch.ipynb
+imageRegression.py
