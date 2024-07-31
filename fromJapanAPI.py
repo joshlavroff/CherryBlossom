@@ -33,6 +33,8 @@ GET_ITEMS_WITH_SEARCHTERM='SELECT * FROM FJPITEMS WHERE searchTerm=%s;'
 
 GET_ITEMS_WITH_KEYWORD='SELECT * FROM FJPITEMS WHERE name LIKE %s;'
 
+GET_ITEMS_LIKE_SEARCHTERM='SELECT * FROM FJPITEMS WHERE searchTerm LIKE %s;'
+
 INSERT_IMAGES='INSERT INTO images (name,itemID,searchTerm,imageLink) VALUES (%s,%s,%s,%s)'
 
 GET_IMAGES_BY_ITEM='SELECT * FROM images WHERE name=%s'
@@ -93,6 +95,17 @@ def get_items_by_like_term():
     with connection:
         with connection.cursor() as cursor:
             cursor.execute(GET_ITEMS_WITH_KEYWORD,(term,))
+            items=cursor.fetchall()
+            cursor.close()
+            return items
+        
+@app.get('/api/items/by-like-searchterm')
+def get_items_by_like_searchterm():
+    data=request.get_json()
+    term=data['searchTerm']
+    with connection:
+        with connection.cursor() as cursor:
+            cursor.execute(GET_ITEMS_LIKE_SEARCHTERM,(term,))
             items=cursor.fetchall()
             cursor.close()
             return items
