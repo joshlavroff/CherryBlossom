@@ -150,3 +150,8 @@ CherryBlossom APIs are meant to be used with PostgreSQL databases. Create a '.en
 {'searchTerm':'searchTerm', 'name':''item3', link:'example.com/item3, 'Price': $0}
 }
 ```
+
+## Linear Regression Model for Price Estimation
+An outline for predicting the prices of items using a ConvNet and linear regression in TensorFlow can be found in [ProductRegression.ipynb](ProductRegression.ipynb). This model can be trained on data from products found in users' past searches, tailoring predictions to brands and styles that they search for. 
+### Creating a training set
+After conducting a search using the FromJapan API, the ```Images``` table in the user's PostgreSQL database will be populated with all images of items found in the search, linked to the item in the ```FJPItems``` table by their ```id```. Using the scripts found in [imageClassify.py](imageClassify.py), this data can be converted into a set used to train the model, where each image is associated with a price. 
